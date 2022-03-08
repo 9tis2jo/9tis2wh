@@ -15,7 +15,7 @@ public class UserDAO {
 	private PreparedStatement stmt = null;
 	private ResultSet rs = null;
 	
-	private final String USER_GET = "select * from users where id=? and password=?";
+	private final String USER_GET = "select * from Member where mID=? and mPW=?";
 	
 	public UserVO getUser(UserVO vo) {
 		
