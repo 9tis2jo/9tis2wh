@@ -91,22 +91,21 @@
                  <form action="updateInfo.do" method="post"  class="aa-login-form">
   					<c:forEach var="row" items="${rs1.rows}" end="0">
 	                    <label for="">아이디<span></span></label>
-	                    <input type="text" value="${row['mID']}" >
+	                    <input type="text" name="mID" value="${row['mID']}" >
 	                    <label for="">이름<span></span></label>
-	                    <input type="text" value="${row['mNAME']}">
+	                    <input type="text" name="mNAME" value="${row['mNAME']}">
 	                    <label for="">생년월일<span></span></label>
-	                    <input type="date" class="space_regist" value="${row['mBIR']}"><br>
+	                    <input type="date" name="mBIR"  class="space_regist" value="${row['mBIR']}"><br>
 	                    <label for="">전화번호<span></span></label>
-	                    <input type="tel" class="space_regist" value="${row['mPHONE']}"><br>
+	                    <input type="tel" name="mPHONE"  class="space_regist" value="${row['mPHONE']}"><br>
 	                    <label for="">이메일<span></span></label>
-	                    <input type="email" class="space_regist" value="${row['mEMAIL']}"><br>
+	                    <input type="email" name="mEMAIL"  class="space_regist" value="${row['mEMAIL']}"><br>
 	                    <label for="">우편번호<span></span></label>
-	                    <input type="text" id="sample4_postcode" value="${row['mPOST']}">
+	                    <input type="text" name="mPOST"  id="sample4_postcode" value="${row['mPOST']}">
 	                    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 15px;">
-	                    <input type="text" id="sample4_roadAddress" value="${row['mADDR']}">
+	                    <input type="text" name="mADDR"  id="sample4_roadAddress" value="${row['mADDR']}">
 	                    <span id="guide" style="color:#999;display:none"></span>
 	                    <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-	                    <input type="text" id="sample4_extraAddress" placeholder="참고항목">
 	                    <button type="submit" class="aa-browse-btn">수정</button>
                     </c:forEach>                    
                   </form>
