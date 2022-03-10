@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.springbook.biz.product.impl.ProductDAO" %>  
+<%@ page import="com.springbook.biz.product.ProductVO" %> 
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,26 +48,25 @@
   
 
   </head>
-  <body>  
+  <body>        
   <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
   <!-- END SCROLL TOP BUTTON -->
 
 
-  <!-- Start header section -->
+  <!-- Start header section --> 
 <%@ include file="common/header.jsp" %>
- 
  <!-- Cart view section -->
  <section id="cart-view">
    <div class="container">
      <div class="row">
        <div class="col-md-12">
-       	 <div class="sub-menu-1">
-          <nav class="sub-menu-1-1">
+         <div class="sub-menu-1">
+	        <nav class="sub-menu-1-1">
 	          <div class="sub-menu-1-1-1"><a href="product-registration.jsp">상품등록</a></div>
-	          <div class="sub-menu-1-1-1"><a href="getProductList.do">상품관리</a></div>
+	          <div class="sub-menu-1-1-1"><a href="product_management.jsp">상품관리</a></div>
 	          <div class="sub-menu-1-1-1"><a href="transaction-history.jsp" >구매/판매 내역</a></div>
-          </nav>
+	        </nav>
          </div>
          <div class="cart-view-area">
            <div class="cart-view-table aa-wishlist-table">
@@ -72,24 +75,26 @@
                   <table class="table">
                     <thead>
                       <tr>
+                        <th></th>
                         <th>상품번호</th>
                         <th>상품이름</th>
                         <th>사진</th>
                         <th>가격</th>
-                        <th>거래일</th>
+                        <th>등록일</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="i" begin="0" end="5" step="1"><!-- 나중에 product넘어오면 바꾸기 -->
+                     <c:forEach items="${productList}" var="product">
                       <tr>
-                        <td>${product.pID}</td>
-                        <td><a class="aa-cart-title" href="#">${product.pNAME}</a></td>
+                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+                        <td>${product.PID}</td>
+                        <td><a class="aa-cart-title" href="#">${product.PName}</a></td>
                         <td><a href="#"><img src="img/man/polo-shirt-1.png" alt="img"></a></td>
-                        <td>${product.pPRICE}</td>
-                        <td>${product.pTDATE}</td>
-                      </tr>   
-                    </c:forEach>            
-                  	</tbody>
+                        <td>${product.PPrice}</td>
+                        <td>${product.PCNT}</td>
+                      </tr> 
+                    </c:forEach>    
+                    </tbody>
                   </table>
                 </div>
              </form>             
@@ -149,9 +154,6 @@
   <script type="text/javascript" src="js/nouislider.js"></script>
   <!-- Custom js -->
   <script src="js/custom.js"></script> 
-  
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  
 
 
   </body>

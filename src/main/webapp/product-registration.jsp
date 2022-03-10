@@ -59,11 +59,12 @@
       <div class="col-md-12">
         <div class="sub-menu-1">
           <nav class="sub-menu-1-1">
-            <div class="sub-menu-1-1-1"><a href="product-registration.html">상품등록</a></div>
-            <div class="sub-menu-1-1-1"><a href="product-management.html">상품관리</a></div>
-            <div class="sub-menu-1-1-1"><a href="transaction-history.html" >구매/판매 내역</a></div>
+	          <div class="sub-menu-1-1-1"><a href="product-registration.jsp">상품등록</a></div>
+	          <div class="sub-menu-1-1-1"><a href="getProductList.do">상품관리</a></div>
+	          <div class="sub-menu-1-1-1"><a href="transaction-history.jsp" >구매/판매 내역</a></div>
           </nav>
         </div>
+        <form action="insertProduct.do"  method="post" enctype="multipart/form-data">
         <div class="sub-title-1">
           <main class="sub-title-1-1">
             <div class="sub-title-1-1-1">
@@ -163,18 +164,6 @@
                   </div>
                 </li>
                 <li class="sub-main-1">
-                  <div class="sub-main-1-1">거래지역<span>*</span></div>
-                  <div class="sub-main-1-5">
-                    <div class="sub-main-1-5-1">
-                    	<button type="button" class="sub-main-1-5-1-1">내 위치</button>
-                    	<button type="button" class="sub-main-1-5-1-1">최근 지역</button>
-                    	<button type="button" class="sub-main-1-5-1-1">주소검색</button>
-                    	<button type="button" class="sub-main-1-5-1-1">지역설정안함</button>
-                    </div>
-                    <input readonly="" placeholder="선호 거래 지역을 검색해주세요." class="sub-main-1-5-2" value="지역설정안함">
-                  </div>
-                </li>
-                <li class="sub-main-1">
                   <div class="sub-main-1-1">상태<span>*</span></div>
                   <div class="sub-main1-6">
                     <div class="sub-main-1-6-1">
@@ -258,10 +247,9 @@
               </ul>
             </div>
           </main>
-          <footer class="enter-1">
-            <div class="enter1-1"><button type="button" class="enter1-1-1">등록하기</button></div>
-          </footer>
+         <div class="enter1-1"><input type="submit" value="등록하기" ></input></div>
         </div>
+        </form>
       </div>
     </div>
   </div>
