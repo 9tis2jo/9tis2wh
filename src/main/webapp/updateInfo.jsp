@@ -1,4 +1,6 @@
-<%@ page  language="java" pageEncoding="UTF-8"%>
+<%-- <%@ page  language="java" pageEncoding="UTF-8"%> --%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
 
@@ -88,14 +90,14 @@
               <div class="col-md-6" style="float: none; margin:0 auto;">
                 <div class="aa-myaccount-register">                 
                  <h4>개인정보 수정</h4>
-                 <form action="updateInfo.do" method="post"  class="aa-login-form">
+                 <form action="updatePro.jsp" method="post"  class="aa-login-form">
   					<c:forEach var="row" items="${rs1.rows}" end="0">
 	                    <label for="">아이디<span></span></label>
 	                    <input type="text" name="mID" value="${row['mID']}" >
 	                    <label for="">이름<span></span></label>
 	                    <input type="text" name="mNAME" value="${row['mNAME']}">
 	                    <label for="">생년월일<span></span></label>
-	                    <input type="date" name="mBIR"  class="space_regist" value="${row['mBIR']}"><br>
+	                    <input type="text" name="mBIR"  class="space_regist" value="${row['mBIR']}"><br>
 	                    <label for="">전화번호<span></span></label>
 	                    <input type="tel" name="mPHONE"  class="space_regist" value="${row['mPHONE']}"><br>
 	                    <label for="">이메일<span></span></label>

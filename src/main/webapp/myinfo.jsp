@@ -68,7 +68,7 @@
                     <br>
                     <br>
                 
-                  <button type="submit" class="aa-update-btn" style="background-color: #333333; border: none;"><a href="updateinfo.jsp" style="color: #f2f3f3;">개인정보 수정</a></button>
+                  <button type="submit" class="aa-update-btn" style="background-color: #333333; border: none;"><a href="updateInfo.jsp" style="color: #f2f3f3;">개인정보 수정</a></button>
                   <button type="submit" class="aa-pwupdate-btn" style="background-color: #333333; border: none;"><a href="updatepw.jsp" style="color: #f2f3f3;">비밀번호 수정</a></button>
                   <button type="submit" class="aa-dropMember-btn" style="background-color: #6a747d; border: none;"><a href="dropmember.jsp" style="color: #f2f3f3;">회원 탈퇴</a></button> 
                  

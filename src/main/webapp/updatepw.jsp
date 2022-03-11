@@ -1,5 +1,19 @@
-<%@ page  language="java" pageEncoding="UTF-8"%>
+<%-- <%@ page  language="java" pageEncoding="UTF-8"%> --%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
+
+<s:setDataSource
+    url="jdbc:oracle:thin:@localhost:1521:orcl"
+    driver="oracle.jdbc.driver.OracleDriver"
+    user="teamproject"
+    password="1234"
+    var= "ds1"
+    scope="page"/>
+<s:query sql="select * from MEMBER" var="rs1" dataSource="${ds1}" />
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -59,14 +73,16 @@
               <div class="col-md-6">
                 <div class="aa-myaccount-login">
                 <h4>비밀번호 변경</h4>
-                 <form action="" class="aa-login-form">
+                 <form action="updateProPw.jsp" class="aa-login-form">
                   <h2 style="color: #333333;">새로운 비밀번호를 입력해주세요</h2>
-                  <label for="">현재 비밀번호<span>*</span></label>
-                    <input  type="text"  placeholder="현재 비밀번호를 입력해주세요">
-                  <label for="">새 비밀번호<span>*</span></label>
-                    <input type="text" placeholder="새 비밀번호를 입력해주세요">
-                  <label for="">비밀번호 확인<span>*</span></label>
-                    <input type="password" placeholder="다시 한번 새 비밀번호를 입력해주세요">
+                  <c:forEach var="row" items="${rs1.rows}" end="0">
+	                  <label for="">현재 비밀번호<span>*</span></label>
+	                    <input  type="password" name="mPW"  value="${row['mPW']}">
+	                  <label for="">새 비밀번호<span>*</span></label>
+	                    <input type="password" id="npw1" name="npw1" placeholder="새 비밀번호를 입력해주세요">
+	                  <label for="">비밀번호 확인<span>*</span></label>
+	                    <input type="password" id="npw2" name="npw2" placeholder="다시 한번 새 비밀번호를 입력해주세요">
+                    </c:forEach>
                   <button type="reset" class="aa-browse-btn" style="background-color: #6a747d; border-color: #6a747d;"><a href="MyInfo.jsp" style="color: #f2f3f3;">취소</a></button>
                   <button type="submit" class="aa-browse-btn" style="background-color: #333333; color: #f2f3f3; border-color: #333333;">수정</button>
                   </form>
@@ -127,5 +143,19 @@
   <script type="text/javascript" src="js/nouislider.js"></script>
   <!-- Custom js -->
   <script src="js/custom.js"></script> 
+  <script type="text/javascript">
+    function test() {
+      let p1 = document.getElementById('npw1').value;
+      let p2 = document.getElementById('npw2').value;
+      if( p1 != p2 ) {
+        alert("비밀번호가 일치 하지 않습니다");
+        return false;
+      } else{
+        alert("비밀번호가 일치합니다");
+        return true;
+      }
+
+    }
+  </script>
   </body>
 </html>
