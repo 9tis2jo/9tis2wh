@@ -1,7 +1,6 @@
 package com.springbook.biz.user.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -17,8 +16,10 @@ public class UserDAO {
 	private ResultSet rs = null;
 	
 	private final String USER_GET = "select * from Member where mID=? and mPW=?";
-	private final String USER_UPDATE = "update user set mID = ?, mPW = ?,"
-			+ "mNAME = ? , mBIR = ? , mPHONE = ? , mEMAIL = ? , mPOST = ? , mADDR = ?";
+	private final String USER_UPDATE = "update user set mID = ?, mNAME = ? , mBIR = ? , "
+			+ "mPHONE = ? , mEMAIL = ? , mPOST = ? , mADDR = ?";
+	private final String USER_PW_UPDATE = "update user set mID = ?, mPW = ?";
+	
 	
 	public UserVO getUser(UserVO vo) {
 		
@@ -38,7 +39,7 @@ public class UserDAO {
 				user.setMID(rs.getString("mID"));
 				user.setMPW(rs.getString("mPW"));
 				user.setMNAME(rs.getString("mNAME"));
-				user.setMBIR(rs.getDate("mBIR"));
+				user.setMBIR(rs.getString("mBIR"));
 				user.setMPHONE(rs.getString("mPHONE"));
 				user.setMEMAIL(rs.getString("mEMAIL"));
 				user.setMPOST(rs.getString("mPOST"));
@@ -66,7 +67,7 @@ public class UserDAO {
 			stmt.setString(1, vo.getMID());
 			stmt.setString(2, vo.getMPW());
 			stmt.setString(3, vo.getMNAME());
-			stmt.setDate(4, (Date) vo.getMBIR());
+			stmt.setString(4, vo.getMBIR());
 			stmt.setString(5, vo.getMPHONE());
 			stmt.setString(6, vo.getMEMAIL());
 			stmt.setString(7, vo.getMPOST());
@@ -77,7 +78,20 @@ public class UserDAO {
 		}finally {
 			JDBCUtil.close(stmt, conn);
 		}
-		
+	}
+
+	public void updatePW(UserVO vo) {
+		try {
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(USER_PW_UPDATE);
+			
+			stmt.setString(1, vo.getMPW());
+			stmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.close(stmt, conn);
+		}
 	}
 }
 

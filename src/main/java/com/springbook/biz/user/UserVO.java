@@ -1,7 +1,5 @@
 package com.springbook.biz.user;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +9,7 @@ public class UserVO {
 	private String mID;
 	private String mPW;
 	private String mNAME;
-	private Date mBIR;
+	private String mBIR;
 	private String mPHONE;
 	private String mEMAIL;
 	private String mPOST;
