@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardDAO">
+	
+	<!-- com.springbook.biz.board.BoardVO -->
+	<resultMap type="board" id="boardResult">
+		<id property="bNUM" column="BNUM"></id>
+		<result property="bTITLE" column="BTITLE"/>
+		<result property="bID" column="BID"/>
+		<result property="bCON" column="BCON"/>
+		<result property="bDATE" column="BDATE"/>
+		<result property="bCNT" column="BCNT"/>
+	</resultMap>
+	
+	<insert id="insertBoard">
+	<selectKey keyProperty="bNUM" resultType="int" order="BEFORE">
+		select board_seq.nextval as bNUM from dual
+	</selectKey>
+		   insert into board(bNUM,bTITLE,bID,bCON)
+			 values(#{bNUM},#{bTITLE},#{bID},#{bCON})   
+	
+		   <!-- insert into board((bNUM, bTITLE, bCON, bID)
+			 values((select nvl(max(bNUM),0)+1 from board),#{bTITLE},#{bCON},#{bID}) -->   
+	</insert>
+	
+	<!-- parameterType = "select값을 넘겨 받을 값" resultType="넘겨줄 값"  map-config값에 있는 Aliases값으로 대체 가능-->
+	<select id="getBoardList" parameterType="board" resultMap="boardResult">
+	
+	<!-- <select id="getBoardList" parameterType="board" resultType="board"> -->
+	<!-- <select id="getBoardList" parameterType="board"(생략가능) resultType="board"> --> 
+	
+		 <!-- select * from board order by bNUM desc --> 
+		
+		 select * from board where 1 = 1  
+	
+		   <!-- select bNUM, bTITLE, bCON, bID, bPW, bCNT, bDATE
+				 from( select bNUM,bTITLE, bCON,bID, bPW, bCNT, bDATE, 
+             	 row_number() over(order by bNUM desc) as rNUM
+                 from board) mp
+                 where rNUM between 1 and 5  -->
+                
+                 
+		<if test="searchCondition == 'TITLE'">
+			AND bTITLE like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND bCON like '%'||#{searchKeyword}||'%' 
+		</if>
+		order by bNUM desc 
+		
+	</select>
+	
+	<select id="getBoardListPaging" resultType="com.springbook.biz.board.BoardVO">
+		<![CDATA[
+		select
+			bNUM, bTITLE, bCON, bID, bDATE
+		from
+			(
+			select /*+INDEX_DESC(tbl_board pK_board) */
+				rownum rn, bNUM, bTITLE, bCO, bID, bDATE
+			from
+				board
+			where rownum <= 20
+			)
+			where rn > 10	
+		]]>
+	</select>
+	
+	
+	
+	<!-- parameterType생략 가능 -->
+	<select id="getBoard" resultType="board"><!-- select는 반환되는 값을 resultType 무조건 적어줘야 한다.  -->
+		select * from board where bNUM = #{bNUM}
+	</select>
+	
+	<update id="updateBoard">
+		update board set bTITLE = #{bTITLE}, bCON = #{bCON} where bNUM = #{bNUM}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete board where bNUM = #{bNUM}
+	</delete>
+
+</mapper>

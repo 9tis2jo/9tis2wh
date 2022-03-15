@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductDAO">
+	<!-- com.springbook.biz.product.ProductVO -->
+	<resultMap type="product" id="productResult">
+		<id property="pID" column="PID" />
+		<result property="mID" column="MID" />
+		<result property="pName" column="PName" />
+		<result property="pPrice" column="PPrice" />
+		<result property="pCT" column="PCT" />
+		<result property="pRDATE" column="PRDATE" />
+		<result property="pTDATE" column="PTDATE" />
+		<result property="pINFO" column="PINFO" />
+		<result property="pCNT" column="PCNT" />
+		<result property="pIMG" column="PIMG" />
+		<result property="pSTATE" column="PSTATE" />
+		<result property="pTRANS" column="PTRANS" />
+		<result property="pTAG" column="PTAG" />
+	</resultMap>
+	<insert id="insertProduct"> 
+		<selectKey keyProperty="pID" resultType="int" order="BEFORE">
+			select product_pID.nextval as pID from dual
+		</selectKey>
+		insert into product(pID,mID,pName,pPrice,pCT,pRDATE,pINFO,pIMG,pSTATE,pTRANS,pTAG)
+		values(#{pID},#{mID, jdbcType=VARCHAR},#{pName},#{pPrice},#{pCT, jdbcType=VARCHAR},#{pRDATE, jdbcType=VARCHAR},#{pINFO},#{pIMG, jdbcType=VARCHAR},#{pSTATE},#{pTRANS},#{pTAG})
+	</insert>
+	<!-- parameterType = "select값을 넘겨 받을 값" resultType="넘겨줄 값" map-config값에 
+		있는 Aliases값으로 대체 가능 -->
+	<select id="getProductList" parameterType="product" resultMap="productResult"> 
+		select * from product where 1 = 1 
+	</select>
+
+	<!-- parameterType생략 가능 -->
+	<select id="getProduct" resultType="product" ><!-- select는 반환되는 값을 resultType 무조건 적어줘야 한다. -->
+		select * from product where pID = #{pID}
+	</select>
+
+	<update id="updateProduct">
+		update product set pName = #{pName}, pPrice =
+		#{pPrice}, pINFO = #{pINFO} where pID = #{pID}
+	</update>
+
+	<delete id="deleteProduct">
+		delete product where pID = #{pID}
+	</delete>
+
+</mapper>

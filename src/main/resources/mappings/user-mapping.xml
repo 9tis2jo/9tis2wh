@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDAO">
+	
+	<!-- com.springbook.biz.board.BoardVO -->
+	<resultMap type="user" id="userResult">
+		<id property="mID" column="MID"></id> <!-- 여기는 뭘 적어야 하는건지.. -->
+		<result property="mPW" column="MPW"/>
+		<result property="mNAME" column="MNAME"/>
+		<result property="mBIR" column="MBIR"/>
+		<result property="mPHONE" column="MPHONE"/>
+		<result property="mEMAIL" column="MEMAIL"/>
+		<result property="mPOST" column="MPOST"/>
+		<result property="mADDR" column="MADDR"/>
+		<result property="mDROP" column="MDROP"/>
+	</resultMap>
+	
+	<insert id="insertUser">
+		insert into MEMBER(mPW, mNAME, mBIR, mPHONE, mEMAIL, mPOST, mADDR, mDROP)
+				values(#{mPW},#{mNAME},#{mBIR},#{mPHONE},#{mEMAIL},#{mPOST},#{mADDR}, 1)
+	</insert>
+	
+	<!-- parameterType = "select값을 넘겨 받을 값" resultType="넘겨줄 값"  map-config값에 있는 Aliases값으로 대체 가능-->
+	<select id="getUserList" parameterType="user" resultMap="userResult">
+	
+	<!-- <select id="getBoardList" parameterType="board" resultType="board"> -->
+	<!-- <select id="getBoardList" parameterType="board"(생략가능) resultType="board"> --> 
+	
+		select * from member order by mID desc
+	
+		 <!-- select * from board where 1 = 1
+		<if test="searchCondition == 'bTITLE'">
+			AND bTITLE like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test="searchCondition == 'bCONTENT'">
+			AND bCON like '%'||#{searchKeyword}||'%' 
+		</if>
+		order by bNUM desc  -->
+		
+	</select>
+	
+	<!-- <select id="getBoardList_T" parameterType="board" resultMap="boardResult">
+		<![CDATA[
+		select * from board where title like '%'||#{searchKeyword}||'%'
+		and seq > 5
+		order by seq desc
+		]]>
+	</select>
+	
+	<select id="getBoardList_C" parameterType="board" resultMap="boardResult">
+		<![CDATA[
+		select * from board where content like '%'||#{searchKeyword}||'%'
+		and seq > 5
+		order by seq desc
+		]]>
+	</select> -->
+	
+	<!-- parameterType생략 가능 -->
+	<select id="getUser" resultType="user"><!-- select는 반환되는 값을 resultType 무조건 적어줘야 한다.  -->
+		select * from member where mID = #{mID}
+	</select>
+	
+	<update id="updateUserInfo">
+		update member set mID = #{mID}, mNAME = #{mNAME}, mBIR = {mBIR}, mPHONE = {mPHONE}, mEMAIL = {mEMAIL}, mPOST = {mPOST}, mADDR = {mADDR}, mDROP = {mDROP} where mID = #{mID}
+	</update>
+	<update id="updateUserPW">
+		update member set mPW = #{mPW} where mID = #{mID}
+	</update>
+	
+	<delete id="deleteUser">
+		delete member where mID = #{mID}
+	</delete>
+
+</mapper>
