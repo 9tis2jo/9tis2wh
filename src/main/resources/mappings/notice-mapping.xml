@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeDAO">
+	
+	<!-- com.springbook.biz.board.BoardVO -->
+	<resultMap type="notice" id="noticeResult">
+		<id property="nNUM" column="NNUM"></id>
+		<result property="nTITLE" column="NTITLE"/>
+		<result property="nID" column="NID"/>
+		<result property="nCON" column="NCON"/>
+		<result property="nDATE" column="NDATE"/>
+		<result property="nCNT" column="NCNT"/>
+	</resultMap>
+	
+	<insert id="insertNotice">
+	<selectKey keyProperty="NNUM" resultType="int" order="BEFORE">
+		select notice_seq.nextval as nNUM from dual
+	</selectKey>
+		   insert into notice(nNUM, nTITLE, nID, nCON)
+			 values(#{nNUM}, #{nTITLE}, #{nID}, #{nCON})   
+	
+		   <!-- insert into board((bNUM, bTITLE, bCON, bID)
+			 values((select nvl(max(bNUM),0)+1 from board),#{bTITLE},#{bCON},#{bID}) -->   
+	</insert>
+	
+	<!-- parameterType = "select값을 넘겨 받을 값" resultType="넘겨줄 값"  map-config값에 있는 Aliases값으로 대체 가능-->
+	<select id="getNoticeList" parameterType="notice" resultMap="noticeResult">
+	
+	<!-- <select id="getBoardList" parameterType="board" resultType="board"> -->
+	<!-- <select id="getBoardList" parameterType="board"(생략가능) resultType="board"> --> 
+	
+		 <!-- select * from board order by bNUM desc --> 
+		
+		 select * from notice where 1 = 1  
+	
+		   <!-- select bNUM, bTITLE, bCON, bID, bPW, bCNT, bDATE
+				 from( select bNUM,bTITLE, bCON,bID, bPW, bCNT, bDATE, 
+             	 row_number() over(order by bNUM desc) as rNUM
+                 from board) mp
+                 where rNUM between 1 and 5  -->
+                
+                 
+		<if test="searchCondition == 'TITLE'">
+			AND nTITLE like '%'||#{searchKeyword}||'%' 
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND nCON like '%'||#{searchKeyword}||'%' 
+		</if>
+		order by nNUM desc 
+		
+	</select>
+	
+	<!-- parameterType생략 가능 -->
+	<select id="getNotice" resultType="notice"><!-- select는 반환되는 값을 resultType 무조건 적어줘야 한다.  -->
+		select * from notice where nNUM = #{nNUM}
+	</select>
+	
+	<update id="updateNotice">
+		update notice set nTITLE = #{nTITLE}, nCON = #{nCON} where nNUM = #{nNUM}
+	</update>
+	
+	<delete id="deleteNotice">
+		delete notice where nNUM = #{nNUM}
+	</delete>
+
+</mapper>
